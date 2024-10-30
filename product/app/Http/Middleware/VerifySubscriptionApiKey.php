@@ -12,7 +12,6 @@ class VerifySubscriptionApiKey
     {
         $apiKey = $request->header('x-api-key');
     
-        // Find the subscription based on the API key
         $subscription = Subscription::where('api_key', $apiKey)->first();
     
         if (!$subscription || $subscription->expires_at < now()) {

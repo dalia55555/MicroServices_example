@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\Http;
-use Exception; // Import the base Exception class
+use Exception;
 
 class ProductClient
 {
@@ -13,12 +13,9 @@ class ProductClient
     public function __construct()
     {
         $this->baseUrl = config('services.product_service.base_url');
-        $this->apiKey = config('services.product_service.api_key'); // Updated to use api_key
+        $this->apiKey = config('services.product_service.api_key');
     }
 
-    /**
-     * Set the authorization API key dynamically if needed.
-     */
     public function setApiKey(string $apiKey): void
     {
         $this->apiKey = $apiKey;
@@ -56,7 +53,7 @@ class ProductClient
      */
     protected function makeRequest(string $endpoint): array
     {
-        $response = Http::withHeaders(['x-api-key' => $this->apiKey]) // Use x-api-key for the header
+        $response = Http::withHeaders(['x-api-key' => $this->apiKey])
                         ->get("{$this->baseUrl}{$endpoint}");
 
         if ($response->successful()) {
@@ -75,7 +72,7 @@ class ProductClient
     protected function getErrorMessage($response): string
     {
         return sprintf(
-            'Error %s: %s', // Corrected the format string
+            'Error %s: %s',
             $response->status(),
             $response->body() ?: 'Unknown error'
         );
